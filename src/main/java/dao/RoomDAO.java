@@ -11,20 +11,19 @@ public class RoomDAO {
         Connection conn = DBConnection.getConnection();
         conn.setAutoCommit(false);
         try {
-            // Check if room is available
+
             String checkSql = "SELECT is_occupied FROM rooms WHERE room_id = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
             checkStmt.setInt(1, roomId);
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next() && !rs.getBoolean("is_occupied")) {
-                // Update room status
+
                 String updateSql = "UPDATE rooms SET is_occupied = TRUE WHERE room_id = ?";
                 PreparedStatement updateStmt = conn.prepareStatement(updateSql);
                 updateStmt.setInt(1, roomId);
                 updateStmt.executeUpdate();
 
-                // Create booking record
                 String bookSql = "INSERT INTO bookings (user_id, room_id, booking_date) VALUES (?, ?, CURDATE())";
                 PreparedStatement bookStmt = conn.prepareStatement(bookSql);
                 bookStmt.setInt(1, userId);

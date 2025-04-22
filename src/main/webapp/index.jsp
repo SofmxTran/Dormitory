@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    // Kiểm tra session và xác nhận người dùng đã đăng nhập
-    HttpSession currentSession = request.getSession(false);  // Lấy session hiện tại nếu có, nếu không có thì trả về null
-
+    HttpSession currentSession = request.getSession(false);
     if (currentSession == null || currentSession.getAttribute("user") == null) {
-        response.sendRedirect("login.jsp");  // Nếu session hoặc attribute "user" không tồn tại, chuyển hướng về login
+        response.sendRedirect("login.jsp");
         return;
     }
     String username = (String) currentSession.getAttribute("user");
